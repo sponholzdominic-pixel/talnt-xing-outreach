@@ -5,11 +5,15 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // ── Auth ──────────────────────────────────────────────────────────────────────
 async function checkAuth() {
   const session = await S.get('supabase_session');
-  if (session && session.expires_at > Date.now() / 1000) {
-    showApp();
-  } else {
-    showLogin();
+  if (session && session.access_token) {
+    // Check expiry - expires_at is Unix timestamp in seconds
+    const now = Math.floor(Date.now() / 1000);
+    if (!session.expires_at || session.expires_at > now) {
+      showApp();
+      return;
+    }
   }
+  showLogin();
 }
 
 function showLogin() {
@@ -34,9 +38,12 @@ async function login(email, password) {
     });
     const data = await res.json();
     if (!res.ok) throw new Error(data.error_description || data.msg || 'Login fehlgeschlagen');
+    // Store session — expires_at is Unix timestamp in seconds
+    // Default to 30 days if not provided
+    const expiresAt = data.expires_at || (Math.floor(Date.now()/1000) + 30*24*60*60);
     await S.set('supabase_session', {
       access_token: data.access_token,
-      expires_at: data.expires_at,
+      expires_at: expiresAt,
       user: { email: data.user?.email, id: data.user?.id }
     });
     showApp();

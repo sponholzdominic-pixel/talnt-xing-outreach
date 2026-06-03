@@ -1,0 +1,6 @@
+/* talnt. XING Outreach - injected styles */
+#talnt-import-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(0, 101, 103, 0.4) !important;
+  transition: all 0.2s ease;
+}

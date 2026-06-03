@@ -62,6 +62,9 @@ document.getElementById('login-password').addEventListener('keydown', e => {
   }
 });
 
+// Show login immediately while checking session
+document.getElementById('login-screen').style.display = 'flex';
+
 // ─── talnt. XING Outreach Manager — Popup v2 ─────────────────────────────────
 
 // ── Default Templates ──────────────────────────────────────────────────────────
@@ -1708,4 +1711,4 @@ async function initApp() {
   }, 3000);
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', checkAuth);

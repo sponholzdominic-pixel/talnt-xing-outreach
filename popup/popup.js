@@ -6,10 +6,10 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 async function checkAuth() {
   const session = await S.get('supabase_session');
   if (session && session.access_token) {
-    // Check expiry - expires_at is Unix timestamp in seconds
     const now = Math.floor(Date.now() / 1000);
     if (!session.expires_at || session.expires_at > now) {
       showApp();
+      await initApp();
       return;
     }
   }

@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "talnt. XING Outreach Manager",
+  "version": "5.1.0",
+  "description": "Automatisiertes Outreach Tool f\u00fcr XING TalentManager \u2014 by talnt. GmbH",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs",
+    "alarms",
+    "windows"
+  ],
+  "host_permissions": [
+    "https://*.xing.com/*",
+    "https://deinname.github.io/*",
+    "https://*.supabase.co/*"
+  ],
+  "background": {
+    "service_worker": "background/service_worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.xing.com/*"
+      ],
+      "js": [
+        "content/messenger.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "talnt. XING Outreach",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "update_url": "https://sponholzdominic-pixel.github.io/talnt-xing-outreach/updates.xml"
+}
